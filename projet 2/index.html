@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
+    <title> Liste produits</title>
+</head>
+
+<body>
+
+    <main id="app">
+
+        <h1>
+          Liste des produits
+        </h1>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Nom produit</th>
+                    <th>Prix produit</th>
+                    <th>Quantité produit</th>
+                    <th>Catégorie produit</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(val,index) in prod" :key="val.nom">
+                    <td>{{ val.nom }}</td>
+                    <td>{{ val.prix }}</td>
+                    <td>{{ val.quantite }}</td>
+                    <td>{{ val.categorie }}</td>
+                    <td>
+                        <button type="button" class="btn btn-primary actions" v-on:click="openModifier(index)">Modifier</button>
+                        <button type="button" class="btn btn-danger actions" v-on:click="supprimer(index)">
+                            <i class="fas fa-trash" ></i>  Supprimer
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- MODAL  -->
+        <div id="editModal" class="modal" v-show="show" >
+            <div class="modal-content">
+                <span class="close" v-on:click="show=false">X</span>
+                <h2>Modifier le produit : {{editNom}}</h2>
+
+                <form>
+                    <label for="editName">Nom produit:     </label><br>
+                    <input type="text" id="editName" v-model="editNom" >
+                
+                    <br>
+
+                    <label for="editPrice">Prix produit:</label><br>
+                    <input type="number" id="editPrice" v-model="editPrix">
+                    <br>
+
+                    <label for="editQuantity">Quantité produit:</label><br>
+                    <input type="number" id="editQuantity" v-model="editQuantite"><br>
+
+                    <label for="editCategory" >Catégorie produit:</label><br>
+                    <select id="editCategory" v-model="editCategorie" >
+                        <option value="Catégorie 1">Catégorie 1</option>
+                        <option value="Catégorie 2">Catégorie 2</option>
+                        <option value="Catégorie 3">Catégorie 3</option>
+                    </select><br>
+
+                    <br><br>
+                    <input type="button" value="Enregistrer" class="btn btn-success" v-on:click="enregistrerModif">
+                </form>
+            </div>
+        </div>
+        <!-- MODAL  -->
+
+        <section class="add-more">
+            <p>Ajouter un produit</p>
+            <form >
+
+                <label for="name">Nom produit:</label><br>
+                <input type="text" id="name" name="name" v-model="newProducts.nom">  <br>
+
+                <label for="price">Prix produit:</label><br>
+                <input type="number" id="price" name="price" v-model="newProducts.prix"><br>
+
+                <label for="quantity">Quantité produit:</label><br>
+                <input type="number" id="quantity" name="quantity" v-model="newProducts.quantite"><br>
+
+                <label for="category">Catégorie produit:</label><br>
+                <select id="category" name="category" v-model="newProducts.categorie" >
+                    <option value="Catégorie 1">Catégorie 1</option>
+                    <option value="Catégorie 2">Catégorie 2</option>
+                    <option value="Catégorie 3">Catégorie 3</option>
+                </select><br>
+
+                <br><br>
+                <input type="button" value="Ajouter" class="btn btn-success" v-on:click="ajouter">
+            </form>
+        </section>
+
+    </main>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="./script.js"></script>
+
+</body>
+
+</html>
